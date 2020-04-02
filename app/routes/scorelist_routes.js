@@ -45,6 +45,9 @@ router.get('/scorelists', (req, res, next) => {
       scorelists = scorelists.sort(function (a, b) {
         return a.score - b.score
       })
+      for (let i = 1; i < 11; i++) {
+        scorelists[i].placement = i
+      }
       res.status(200).json({ scorelists: scorelists })
     })
     // if an error occurs, pass it to the handler

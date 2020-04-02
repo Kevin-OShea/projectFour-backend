@@ -9,6 +9,9 @@ const scorelistSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  placement: {
+    type: Number
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
