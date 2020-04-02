@@ -38,7 +38,19 @@ router.get('/scorelists', (req, res, next) => {
       return scorelists.map(scorelist => scorelist.toObject())
     })
     // respond with status 200 and JSON of the scorelists
-    .then(scorelists => res.status(200).json({ scorelists: scorelists }))
+    .then(scorelists => {
+      console.log('whats up')
+      let newList
+      if (scorelists.length > 10) {
+        newList = scorelists.split(0, 10)
+        let array = newList.sort(function (a, b) { return a - b })
+        newList = array
+      } else {
+        newList = scorelists.sort(function (a, b) { return a - b })
+      }
+      console.log(newList)
+      res.status(200).json({ scorelists: newList })
+    })
     // if an error occurs, pass it to the handler
     .catch(next)
 })
@@ -60,7 +72,7 @@ router.get('/scorelists/:id', requireToken, (req, res, next) => {
 router.post('/scorelists', requireToken, (req, res, next) => {
   // set owner of new scorelist to be current user
   req.body.scorelist.owner = req.user.id
-
+  console.log('hello')
   Scorelist.create(req.body.scorelist)
     // respond to succesful `create` with status 201 and JSON of new "scorelist"
     .then(scorelist => {
