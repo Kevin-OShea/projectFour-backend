@@ -39,17 +39,13 @@ router.get('/scorelists', (req, res, next) => {
     })
     // respond with status 200 and JSON of the scorelists
     .then(scorelists => {
-      console.log('whats up')
-      let newList
       if (scorelists.length > 10) {
-        newList = scorelists.split(0, 10)
-        let array = newList.sort(function (a, b) { return a - b })
-        newList = array
-      } else {
-        newList = scorelists.sort(function (a, b) { return a - b })
+        scorelists = scorelists.splice(0, 10)
       }
-      console.log(newList)
-      res.status(200).json({ scorelists: newList })
+      scorelists = scorelists.sort(function (a, b) {
+        return a.score - b.score
+      })
+      res.status(200).json({ scorelists: scorelists })
     })
     // if an error occurs, pass it to the handler
     .catch(next)
