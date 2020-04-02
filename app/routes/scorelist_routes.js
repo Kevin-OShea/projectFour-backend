@@ -45,8 +45,9 @@ router.get('/scorelists', (req, res, next) => {
       scorelists = scorelists.sort(function (a, b) {
         return a.score - b.score
       })
-      for (let i = 1; i < 11; i++) {
-        scorelists[i].placement = i
+      for (let i = 0; i < 10; i++) {
+        let j = i + 1
+        scorelists[i].placement = j
       }
       res.status(200).json({ scorelists: scorelists })
     })
